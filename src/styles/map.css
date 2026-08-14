@@ -1,0 +1,179 @@
+/* ==========================================================================
+   Ferdowsi Smart Home - Map Page Styles
+   ========================================================================== */
+
+.page-view[data-page-content="map"] {
+  height: 100%;
+}
+
+/* Map fills the entire viewport next to the sidebar — no header, no padding */
+.map-fullpage {
+  position: fixed;
+  inset: 0;
+  left: var(--sidebar-width);
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #0f131a;
+  font-family: "DM Sans", Arial, sans-serif;
+}
+
+/* Interactive Pins (rendered via Leaflet divIcon) */
+.map-marker-wrapper {
+  cursor: pointer;
+}
+
+.pin-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+/* Glow effects depending on entity types */
+.pin-icon[data-type="light"].state-on {
+  background: rgba(253, 224, 71, 0.15);
+  border-color: #eab308;
+  box-shadow: 0 0 15px rgba(234, 179, 8, 0.4);
+}
+
+.pin-icon[data-type="lock"].state-alert {
+  border-color: #f43f5e;
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+}
+
+.pin-icon[data-type="camera"].state-on {
+  border-color: #f43f5e;
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+}
+
+/* Person / presence pins */
+.person-pin {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #fff;
+  background: #334155;
+  border: 2px solid #64748b;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.person-pin.is-home {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: #22c55e;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+}
+
+.person-pin.is-away {
+  background: rgba(148, 163, 184, 0.2);
+  border-color: #94a3b8;
+}
+
+/* Tooltip on Hover */
+.pin-tooltip {
+  position: absolute;
+  bottom: 52px;
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.2s, transform 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.map-pin:hover .pin-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Toolbar Control */
+.map-toolbar {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.map-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.map-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Leaflet marker popup (device/person quick info) */
+.leaflet-popup-content-wrapper {
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 10px;
+}
+
+.leaflet-popup-tip {
+  background: var(--surface);
+}
+
+.map-popup {
+  min-width: 180px;
+  font-family: "DM Sans", Arial, sans-serif;
+}
+
+.map-popup-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.map-popup-desc {
+  margin-top: 4px;
+  color: var(--text-3);
+  font-size: 0.75rem;
+}
+
+.map-popup-status {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+
+.map-popup-btn {
+  width: 100%;
+  margin-top: 10px;
+}

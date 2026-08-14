@@ -1,0 +1,779 @@
+/* ==========================================================================
+   Ferdowsi Smart Home - Energy Dashboard Page Styles
+   Self-contained: shell.css provides layout/shell, this file provides the
+   card/stat/sankey primitives (kept local to avoid clashing with the
+   differently-scoped .card/.sidebar/.topbar rules in styles.css).
+   ========================================================================== */
+
+:root {
+  --green: #55d187;
+  --green-dim: rgba(85, 209, 135, 0.14);
+
+  --amber: #f4b942;
+  --amber-dim: rgba(244, 185, 66, 0.14);
+
+  --purple: #a78bfa;
+  --purple-dim: rgba(167, 139, 250, 0.14);
+
+  --blue: #6ea8fe;
+  --blue-dim: rgba(110, 168, 254, 0.14);
+
+  --red: #f27676;
+}
+
+.energy-page-content {
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Summary stat tiles */
+
+.status-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.stat-card {
+  position: relative;
+  min-height: 120px;
+  overflow: hidden;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.stat-card::after {
+  content: "";
+  position: absolute;
+  right: -25px;
+  bottom: -35px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  opacity: 0.08;
+}
+
+.stat-card.blue::after { background: var(--blue); }
+.stat-card.green::after { background: var(--green); }
+.stat-card.amber::after { background: var(--amber); }
+.stat-card.purple::after { background: var(--purple); }
+
+.stat-val {
+  position: relative;
+  z-index: 1;
+  color: var(--text);
+  font-family: "DM Mono", monospace;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.stat-label {
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+  color: var(--text-3);
+  font-size: 11px;
+}
+
+/* Cards */
+
+.card {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.card-title {
+  margin: 0 0 4px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.energy-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.energy-chart-card--wide {
+  grid-column: span 1;
+}
+
+@media (max-width: 1100px) {
+  .energy-grid-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tabs */
+
+.energy-tabs {
+  display: flex;
+  gap: 22px;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.energy-tab {
+  padding: 12px 2px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-3);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.energy-tab:hover {
+  color: var(--text);
+}
+
+.energy-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Node icons in the sankey diagram */
+
+.node-icon {
+  text-anchor: middle;
+  font-size: 16px;
+}
+
+/* Sources table */
+
+.sources-table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+}
+
+.sources-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+}
+
+.sources-row:last-child {
+  border-bottom: none;
+}
+
+.sources-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.sources-name {
+  flex: 1;
+  color: var(--text-2);
+}
+
+.sources-usage {
+  color: var(--text);
+  font-family: "DM Mono", monospace;
+  text-align: right;
+}
+
+.sources-cost {
+  min-width: 56px;
+  color: var(--text-3);
+  font-family: "DM Mono", monospace;
+  text-align: right;
+}
+
+.sources-header {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.sources-header .sources-name,
+.sources-header .sources-usage,
+.sources-header .sources-cost {
+  color: var(--text-3);
+  font-family: inherit;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+.sources-header .sources-swatch {
+  background: none;
+}
+
+/* Period selector bar (Gas / Water tabs) */
+
+.energy-period-bar {
+  position: sticky;
+  bottom: 20px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 24px auto 0;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.energy-period-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+
+.energy-period-icon {
+  display: flex;
+  width: 22px;
+  height: 22px;
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+
+.energy-period-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.energy-period-range {
+  color: var(--text);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.energy-period-year {
+  color: var(--text-3);
+  font-size: 11.5px;
+}
+
+.energy-period-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.energy-period-now {
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.energy-period-nav {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  color: var(--text-2);
+  font-size: 16px;
+}
+
+.energy-period-nav:hover {
+  background: var(--surface-hover);
+}
+
+/* Chart cards */
+
+.energy-chart-card canvas {
+  margin-top: 14px;
+  max-height: 220px;
+}
+
+.energy-chart-card--tall canvas {
+  max-height: 420px;
+}
+
+/* Now tab */
+
+.energy-now-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.energy-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--green-dim);
+  color: var(--green);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.energy-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: energy-live-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes energy-live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.75); }
+}
+
+.energy-now-updated {
+  color: var(--text-3);
+  font-size: 11.5px;
+}
+
+.chart-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.chart-card-total {
+  color: var(--text-2);
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  background: var(--surface-3);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-top: 14px;
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.chart-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.chart-legend-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  color: #0d1117;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Power usage pill (Energy → Now) */
+
+.energy-usage-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+}
+
+.energy-usage-pill-icon {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.energy-usage-pill-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.energy-usage-pill-label {
+  color: var(--text-3);
+  font-size: 10.5px;
+}
+
+.energy-usage-pill-value {
+  color: var(--text);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+/* Tab panels */
+
+.tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+
+/* Electricity tab layout */
+
+.energy-two-col {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.energy-col-main,
+.energy-col-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .energy-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ed-svg--mini {
+  min-height: 220px;
+}
+
+/* Grid energy balance */
+
+.grid-balance-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pylon-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--text-3);
+}
+
+.grid-balance-summary {
+  font-size: 12.5px;
+  color: var(--text-2);
+  margin: 10px 0 12px;
+}
+
+.grid-balance-summary strong {
+  color: var(--text);
+  font-family: "DM Mono", monospace;
+}
+
+.grid-balance-bar {
+  position: relative;
+  height: 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+}
+
+.grid-balance-segment.headroom {
+  background: var(--surface-3);
+}
+
+.grid-balance-segment.exported {
+  background: rgba(167, 139, 250, 0.45);
+}
+
+.grid-balance-segment.imported {
+  background: var(--blue);
+}
+
+.grid-balance-marker {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--text);
+  border-radius: 1px;
+}
+
+/* Gauges */
+
+.gauge-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px;
+}
+
+.gauge-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.gauge-donut {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: "DM Mono", monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.gauge-donut {
+  position: relative;
+}
+
+.gauge-donut::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.gauge-donut span {
+  position: relative;
+  z-index: 1;
+}
+
+.gauge-label {
+  font-size: 11.5px;
+  color: var(--text-3);
+}
+
+/* Energy flow — Sankey ribbon diagram */
+
+.energy-flow {
+  margin-top: 14px;
+}
+
+.flow-sankey-wrap {
+  position: relative;
+}
+
+.flow-sankey {
+  width: 100%;
+  height: auto;
+  min-height: 460px;
+}
+
+.flow-ribbon {
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.flow-ribbon.is-dim {
+  opacity: 0.12;
+}
+
+.flow-sankey g {
+  transition: opacity 150ms ease;
+}
+
+.flow-sankey g.is-dim {
+  opacity: 0.15;
+}
+
+.flow-tooltip {
+  position: absolute;
+  z-index: 5;
+  transform: translate(-50%, calc(-100% - 12px));
+  padding: 8px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.flow-tooltip-route {
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.flow-tooltip-value {
+  margin-top: 2px;
+  color: var(--text-2);
+  font-size: 12px;
+  font-family: "DM Mono", monospace;
+}
+
+.flow-node-label {
+  fill: var(--text);
+  font-size: 13px;
+  font-family: "DM Sans", Arial, sans-serif;
+  dominant-baseline: middle;
+}
+
+.flow-node-label--end {
+  text-anchor: end;
+}
+
+.flow-node-label--sm {
+  font-size: 11.5px;
+}
+
+/* Detailed sources table (Electricity tab) */
+
+.sources-table--detailed .sources-row.is-total {
+  font-weight: 600;
+}
+
+.sources-table--detailed .sources-row.is-total .sources-name {
+  color: var(--text);
+}
+
+.sources-table--detailed .sources-row:not(.is-total) .sources-name {
+  padding-left: 18px;
+  font-size: 11.5px;
+}
+
+/* Sankey-style distribution diagram */
+
+.ed-svg {
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+  margin-top: 16px;
+  overflow: visible;
+}
+
+.flow-path {
+  fill: none;
+  stroke-width: 3;
+  stroke-dasharray: 8 8;
+  animation: flow-line 1.6s linear infinite;
+}
+
+.flow-path.inactive {
+  opacity: 0.22;
+  animation: none;
+}
+
+.node-circle {
+  fill: var(--surface-2);
+  stroke-width: 2;
+}
+
+.node-value,
+.node-label {
+  text-anchor: middle;
+  font-family: "DM Mono", monospace;
+}
+
+.node-value {
+  fill: var(--text);
+  font-size: 12px;
+}
+
+.node-value--sm {
+  font-size: 10px;
+}
+
+.node-label {
+  fill: var(--text-3);
+  font-size: 11px;
+}
+
+.flow-dot {
+  animation: pulse-glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes flow-line {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+
+@keyframes pulse-glow {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Device consumption bars */
+
+.energy-device-row {
+  margin-top: 14px;
+}
+
+.energy-device-row:first-child {
+  margin-top: 4px;
+}
+
+.energy-device-row-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+
+.energy-device-row-head strong {
+  color: var(--text);
+  font-family: "DM Mono", monospace;
+}
+
+.energy-device-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.energy-device-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+}
