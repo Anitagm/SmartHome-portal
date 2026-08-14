@@ -1,7 +1,22 @@
 {
   "name": "ferdowsi-react",
+  "description": "Ferdowsi — a fully client-side smart home dashboard built with React: live energy monitoring, device/room management, automations, an interactive map, and a real notification center.",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": "Anita Ganjimoghadam",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Anitagm/SmartHome-portal.git"
+  },
+  "keywords": [
+    "react",
+    "vite",
+    "smart-home",
+    "dashboard",
+    "chartjs",
+    "leaflet"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -23,7 +38,6 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
     "oxlint": "^1.75.0",
-    "playwright": "^1.62.1",
     "vite": "^8.2.0"
   }
 }

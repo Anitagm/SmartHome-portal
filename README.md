@@ -70,4 +70,4 @@ src/
 
 ## License
 
-Not specified — add one if you plan to publish or share this project.
+[MIT](LICENSE)
