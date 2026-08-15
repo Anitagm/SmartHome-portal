@@ -1,6 +1,6 @@
 {
   "name": "ferdowsi-react",
-  "description": "Ferdowsi — a fully client-side smart home dashboard built with React: live energy monitoring, device/room management, automations, an interactive map, and a real notification center.",
+  "description": "Ferdowsi — a fully client-side smart home dashboard built with React: live energy monitoring, device/room management, automations, an interactive map, AI-powered insights and security automation, and a real notification center.",
   "private": true,
   "version": "1.0.0",
   "author": "Anita Ganjimoghadam",
@@ -15,7 +15,8 @@
     "smart-home",
     "dashboard",
     "chartjs",
-    "leaflet"
+    "leaflet",
+    "ai"
   ],
   "type": "module",
   "scripts": {

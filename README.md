@@ -14,13 +14,19 @@ A front-end smart home dashboard built with React and Vite. It's a fully client-
 |---|---|
 | ![Power flow](docs/media/3-power-flow.png) | ![Automations](docs/media/4-automations.png) |
 
+| AI Insights |
+|---|
+| ![AI Insights](docs/media/6-ai-insights.png) |
+
 ## Features
 
 - **Dashboard** — live-editable device grid, room cards with per-device on/off toggles, security status, presence detection, network status, energy distribution overview, an interactive floor plan, and a draggable dual-setpoint thermostat.
+- **AI Insights** — a heuristic engine that watches live device, energy, and notification data and surfaces anomaly/suggestion cards (e.g. "higher device usage than usual", "shift usage to solar peak"). See [note below](#note-on-the-ai-features) on how this is implemented.
+- **AI Security Assistant** — a simulated break-in scenario: motion is detected while no one is confirmed home, and the assistant reasons through it live, then automatically locks the doors and arms the security system — updating real app state, not just a script.
 - **Energy** — Summary / Electricity / Gas / Water tabs with Chart.js charts, a "Current power flow" Sankey-style diagram (hover to highlight a single flow, dims everything else), and a **Now** tab with a simulated live power feed: a full-day power-sources chart, live gauges (battery charge, self-sufficiency, grid dependency), and a live power-flow diagram.
 - **Map** — Leaflet map showing home zone and family member locations.
 - **Automations** — automation rules and scene activation.
-- **Notifications** — a real notification center (not just toasts): every meaningful change in the app (device toggles, thermostat setpoints, room devices) is recorded as a persistent notification, viewable and dismissible from the bell icon.
+- **Notifications** — a real notification center (not just toasts): every meaningful change in the app (device toggles, thermostat setpoints, room devices, AI Assistant actions) is recorded as a persistent notification, viewable and dismissible from the bell icon.
 - **Activity log** — a full log combining seeded activity history with live notifications.
 - **Settings / Profile** — theme (light/dark), localization (timezone, number/date/time format, first day of week), and a Home-Assistant-style settings landing page.
 - Responsive layout, light/dark theme, toast notifications, and route-level code splitting for fast initial load.
@@ -50,10 +56,10 @@ Requires Node.js 18+.
 
 ```
 src/
-├─ components/     # Reusable UI: cards, modals, charts, the thermostat dial, etc.
+├─ components/     # Reusable UI: cards, modals, charts, the thermostat dial, AI panels, etc.
 ├─ pages/          # One component per route (Dashboard, Energy, Map, Automations, Profile, Settings)
 ├─ layout/          # App shell: sidebar + top-level layout/outlet
-├─ hooks/           # State + behavior: managed devices, notifications, live power simulation, theme, localization, etc.
+├─ hooks/           # State + behavior: managed devices, notifications, live power simulation, AI insights, theme, localization, etc.
 ├─ data/            # Seed/mock data (devices, rooms, energy, automations, security, notifications...)
 ├─ styles/          # Plain CSS, split by page/feature
 ├─ utils/           # Small formatting helpers (relative time, locale-aware number/date formatting)
@@ -67,6 +73,10 @@ src/
 - Device/room state, notifications, and localization preferences persist in `localStorage`, so changes survive a page reload.
 - The Energy → **Now** tab simulates a live power feed with a bounded random walk (no real sensors involved) and synthesizes a full day's worth of history so the chart's time axis behaves like a real Home Assistant energy dashboard.
 - To wire this app to a real backend/API instead, the natural integration points are the hooks in `src/hooks/` (e.g. `useManagedDevices`, `useLivePower`, `useNotifications`) — swap their internal state/localStorage logic for real data fetching without needing to change the components that consume them.
+
+### Note on the AI features
+
+The "AI" panels are **rule-based, not model-backed** — there's no LLM or external API call involved. `useAIInsights` runs plain heuristics (thresholds/pattern checks) over the app's own live state, and the Security Assistant plays back a scripted sequence of steps. The *effects* are real (it genuinely locks the front door and arms security in app state), but the *reasoning* isn't — it's a demonstration of the UX pattern, not a trained model. The natural next step would be swapping the heuristics in `useAIInsights.js` for a real model call, or adding an LLM-powered chat assistant (kept out of this client-only build since that requires a backend to avoid exposing an API key in the browser).
 
 ## License
 
