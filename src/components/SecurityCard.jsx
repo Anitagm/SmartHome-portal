@@ -1,5 +1,4 @@
 import { cameras } from '../data/security-data.js';
-import { useSecurityState } from '../hooks/useSecurityState.js';
 import { useToast } from '../hooks/useToast.jsx';
 import { useState } from 'react';
 
@@ -9,8 +8,7 @@ const STATUS_LABELS = {
   'armed-away': 'Armed Away'
 };
 
-export default function SecurityCard() {
-  const { securityState, setStatus } = useSecurityState();
+export default function SecurityCard({ securityState, setStatus }) {
   const showToast = useToast();
   const [cameraStatus, setCameraStatus] = useState(() => Object.fromEntries(cameras.map((c) => [c.id, 'idle'])));
 

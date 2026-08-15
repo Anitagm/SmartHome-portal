@@ -112,3 +112,128 @@
   font-size: 13px;
   line-height: 1.5;
 }
+
+/* AI Insights / AI Security Assistant (Dashboard) */
+
+.ai-insights-card {
+  background: linear-gradient(155deg, var(--surface) 0%, var(--accent-dim) 160%);
+}
+
+.ai-insights-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  margin-right: 6px;
+  border-radius: 999px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+
+.ai-insights-sub {
+  color: var(--text-3);
+  font-size: 11.5px;
+}
+
+.ai-insights-empty {
+  margin-top: 10px;
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+.ai-insights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.ai-insight-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.ai-insight--anomaly {
+  border-left-color: var(--amber, #f4b942);
+}
+
+.ai-insight-icon {
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.ai-insight-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-insight-title {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ai-insight-message {
+  margin-top: 2px;
+  color: var(--text-2);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.ai-insight-dismiss {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: none;
+  color: var(--text-3);
+  font-size: 16px;
+  border-radius: var(--radius-xs);
+}
+
+.ai-insight-dismiss:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.ai-security-log {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+}
+
+.ai-security-log-row {
+  color: var(--text-2);
+  animation: ai-log-in 200ms ease;
+}
+
+@keyframes ai-log-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

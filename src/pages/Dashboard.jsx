@@ -11,17 +11,21 @@ import HistoryModal from '../components/HistoryModal.jsx';
 import ActivityLogModal from '../components/ActivityLogModal.jsx';
 import FloorPlanInteractive from '../components/FloorPlanInteractive.jsx';
 import ThermostatCard from '../components/ThermostatCard.jsx';
+import AIInsightsPanel from '../components/AIInsightsPanel.jsx';
+import AISecurityAssistant from '../components/AISecurityAssistant.jsx';
 import { useManagedDevices } from '../hooks/useManagedDevices.js';
 import { useRoomDevices } from '../hooks/useRoomDevices.js';
+import { useSecurityState } from '../hooks/useSecurityState.js';
 import { useToast } from '../hooks/useToast.jsx';
 import { useNotifications } from '../hooks/useNotifications.jsx';
 import { activities, historyData } from '../data/dashboard-data.js';
 
 export default function Dashboard() {
-  const { devices, toggleDevice, setDim, addDevice, deleteDevice } = useManagedDevices();
+  const { devices, toggleDevice, setDim, addDevice, deleteDevice, applyChanges } = useManagedDevices();
   const { rooms, toggleRoomDevice } = useRoomDevices();
+  const { securityState, setStatus } = useSecurityState();
   const showToast = useToast();
-  const { addNotification } = useNotifications();
+  const { addNotification, notifications } = useNotifications();
   const [activeRoom, setActiveRoom] = useState(null);
   const [manageOpen, setManageOpen] = useState(false);
   const [logOpen, setLogOpen] = useState(false);
@@ -92,9 +96,20 @@ export default function Dashboard() {
           </div>
         </div>
 
+        <div style={{ marginTop: 20 }}>
+          <AIInsightsPanel devices={devices} notifications={notifications} />
+        </div>
+
         <div className="dashboard-panels fade-up delay-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, marginTop: 20 }}>
-          <SecurityCard />
+          <SecurityCard securityState={securityState} setStatus={setStatus} />
           <ThermostatCard name="Upstairs" currentTemp={22} />
+        </div>
+
+        <div className="dashboard-panels fade-up delay-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, marginTop: 20 }}>
+          <AISecurityAssistant
+            onArmAway={() => setStatus('armed-away', 'Armed Away')}
+            onLockFrontDoor={() => applyChanges([{ name: 'Front Lock', state: 'on' }])}
+          />
         </div>
 
         <div className="dashboard-panels fade-up delay-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, marginTop: 20 }}>
